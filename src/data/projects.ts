@@ -85,7 +85,7 @@ export const projectsData: ProjectData[] = [
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmoM-xIIQQFd61HpwYutAPhihaFqZPlRpkCg&s",
     ],
     categoria: "Web App",
-    destaque: false,
+    destaque: true,
   },
   {
     slug: "vue-projects-basics",

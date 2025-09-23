@@ -6,6 +6,7 @@ import { Footer } from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { ProjectCard } from "@/components/ui/project-card";
 import { ContactCards } from "@/components/ui/contact-cards";
+import { ImageWithLoading } from "@/components/ui/image-with-loading";
 import { profileData } from "@/data/profile";
 import { getFeaturedProjects } from "@/data/projects";
 
@@ -32,12 +33,13 @@ const Index = () => {
               className="flex justify-center"
             >
               <div className="relative">
-                <img
+                <ImageWithLoading
                   src={profileData.foto_perfil_url}
                   alt={profileData.nome_completo}
-                  className="w-32 h-32 lg:w-40 lg:h-40 rounded-full object-cover border-4 border-primary/20 shadow-glow"
+                  className="w-32 h-32 lg:w-40 lg:h-40 rounded-full border-4 border-primary/20 shadow-glow"
+                  fallbackClassName="w-32 h-32 lg:w-40 lg:h-40"
                 />
-                <div className="absolute inset-0 rounded-full bg-gradient-primary opacity-20 animate-pulse" />
+                <div className="absolute inset-0 rounded-full bg-gradient-primary opacity-20 animate-pulse pointer-events-none" />
               </div>
             </motion.div>
 

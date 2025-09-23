@@ -5,6 +5,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { TechTag } from "@/components/ui/tech-tag";
 import { getProjectBySlug } from "@/data/projects";
 
 const ProjectDetail = () => {
@@ -140,9 +141,9 @@ const ProjectDetail = () => {
                 <h3 className="text-xl font-semibold">Tecnologias Utilizadas</h3>
                 <div className="flex flex-wrap gap-3">
                   {project.tecnologias.map((tech) => (
-                    <Badge key={tech} variant="secondary" className="text-sm py-1 px-3">
+                    <TechTag key={tech} className="text-sm">
                       {tech}
-                    </Badge>
+                    </TechTag>
                   ))}
                 </div>
               </div>
@@ -157,16 +158,16 @@ const ProjectDetail = () => {
             >
               <div className="card-elevated p-6 space-y-4">
                 <h3 className="text-lg font-semibold">Informações do Projeto</h3>
-                <div className="space-y-3 text-sm">
+                <div className="space-y-4 text-sm">
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Ano:</span>
                     <span className="font-medium">{project.ano}</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Categoria:</span>
-                    <Badge variant="outline" className="text-xs">
+                  <div className="flex justify-between items-start gap-3">
+                    <span className="text-muted-foreground flex-shrink-0">Categoria:</span>
+                    <TechTag className="text-xs flex-shrink-0">
                       {project.categoria}
-                    </Badge>
+                    </TechTag>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Status:</span>

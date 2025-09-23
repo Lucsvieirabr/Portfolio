@@ -45,7 +45,7 @@ export function Header() {
             to="/" 
             className="text-xl lg:text-2xl font-bold text-gradient hover:scale-105 transition-transform duration-normal"
           >
-            {profileData.nome_completo.split(' ')[0]}
+            Lucas
           </Link>
 
           {/* Desktop Navigation */}

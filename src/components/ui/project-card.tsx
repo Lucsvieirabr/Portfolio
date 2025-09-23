@@ -3,6 +3,7 @@ import { ExternalLink, Github } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { TechTag } from "@/components/ui/tech-tag";
 import type { ProjectData } from "@/data/projects";
 
 interface ProjectCardProps {
@@ -88,9 +89,9 @@ export function ProjectCard({ project, index = 0 }: ProjectCardProps) {
         {/* Technologies */}
         <div className="flex flex-wrap gap-2">
           {project.tecnologias.slice(0, 4).map((tech) => (
-            <Badge key={tech} variant="outline" className="text-xs">
+            <TechTag key={tech} className="text-xs">
               {tech}
-            </Badge>
+            </TechTag>
           ))}
           {project.tecnologias.length > 4 && (
             <Badge variant="outline" className="text-xs">
@@ -101,9 +102,14 @@ export function ProjectCard({ project, index = 0 }: ProjectCardProps) {
 
         {/* Actions */}
         <div className="flex items-center justify-between pt-2">
-          <Button asChild variant="ghost" className="h-auto p-0 text-sm font-medium">
-            <Link to={`/projetos/${project.slug}`}>
-              Ver detalhes →
+          <Button 
+            asChild 
+            variant="ghost" 
+            className="h-auto p-0 text-sm font-medium group/link hover:bg-transparent hover:text-primary transition-all duration-300 hover:translate-x-1"
+          >
+            <Link to={`/projetos/${project.slug}`} className="flex items-center gap-1">
+              <span>Ver detalhes</span>
+              <span className="group-hover/link:translate-x-1 transition-transform duration-300">→</span>
             </Link>
           </Button>
           
@@ -112,15 +118,16 @@ export function ProjectCard({ project, index = 0 }: ProjectCardProps) {
               <Button
                 size="sm"
                 variant="outline"
-                className="h-8 px-3 text-xs"
+                className="h-8 px-3 text-xs hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300 hover:scale-105"
                 asChild
               >
                 <a
                   href={project.url_live}
                   target="_blank"
                   rel="noopener noreferrer"
+                  className="flex items-center gap-1"
                 >
-                  <ExternalLink className="h-3 w-3 mr-1" />
+                  <ExternalLink className="h-3 w-3" />
                   Live
                 </a>
               </Button>
@@ -128,15 +135,16 @@ export function ProjectCard({ project, index = 0 }: ProjectCardProps) {
             <Button
               size="sm"
               variant="outline"
-              className="h-8 px-3 text-xs"
+              className="h-8 px-3 text-xs hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300 hover:scale-105"
               asChild
             >
               <a
                 href={project.url_github}
                 target="_blank"
                 rel="noopener noreferrer"
+                className="flex items-center gap-1"
               >
-                <Github className="h-3 w-3 mr-1" />
+                <Github className="h-3 w-3" />
                 Code
               </a>
             </Button>
