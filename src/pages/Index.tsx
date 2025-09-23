@@ -32,12 +32,12 @@ const Index = () => {
               transition={{ duration: 0.5 }}
               className="flex justify-center"
             >
-              <div className="relative">
+              <div className="relative w-32 h-32 lg:w-40 lg:h-40">
                 <ImageWithLoading
                   src={profileData.foto_perfil_url}
                   alt={profileData.nome_completo}
-                  className="w-32 h-32 lg:w-40 lg:h-40 rounded-full border-4 border-primary/20 shadow-glow"
-                  fallbackClassName="w-32 h-32 lg:w-40 lg:h-40"
+                  className="w-full h-full rounded-full border-4 border-primary/20 shadow-glow object-cover"
+                  fallbackClassName="rounded-full"
                 />
                 <div className="absolute inset-0 rounded-full bg-gradient-primary opacity-20 animate-pulse pointer-events-none" />
               </div>
