@@ -1,12 +1,36 @@
 import { useParams, Link, Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft, ExternalLink, Github, Calendar, Tag } from "lucide-react";
+import { ArrowLeft, ExternalLink, Github, Computer, Calendar, Tag } from "lucide-react";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { TechTag } from "@/components/ui/tech-tag";
 import { getProjectBySlug } from "@/data/projects";
+
+// Função para determinar o texto do botão baseado na categoria
+const getButtonText = (categoria: string): string => {
+  if (categoria === "Profissional - CodeTime") {
+    return "Site da CodeTime";
+  }
+  return "Código";
+};
+
+// Função para determinar o texto do botão na sidebar baseado na categoria
+const getSidebarButtonText = (categoria: string): string => {
+  if (categoria === "Profissional - CodeTime") {
+    return "Site da CodeTime";
+  }
+  return "Código no GitHub";
+};
+
+// Função para determinar o ícone baseado na categoria
+const getButtonIcon = (categoria: string) => {
+  if (categoria === "Profissional - CodeTime") {
+    return <Computer className="h-4 w-4" />;
+  }
+  return <Github className="h-4 w-4" />;
+};
 
 const ProjectDetail = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -72,14 +96,18 @@ const ProjectDetail = () => {
                       </a>
                     </Button>
                   )}
-                  <Button variant="outline" asChild>
+                  <Button 
+                    variant="outline" 
+                    className={project.categoria === "Profissional - CodeTime" ? "px-3" : ""}
+                    asChild
+                  >
                     <a
                       href={project.url_github}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <Github className="h-4 w-4 mr-2" />
-                      Código
+                      <span className="mr-2">{getButtonIcon(project.categoria)}</span>
+                      {getButtonText(project.categoria)}
                     </a>
                   </Button>
                 </div>
@@ -191,14 +219,18 @@ const ProjectDetail = () => {
                       </a>
                     </Button>
                   )}
-                  <Button variant="outline" className="w-full justify-start" asChild>
+                  <Button 
+                    variant="outline" 
+                    className={`w-full justify-start ${project.categoria === "Profissional - CodeTime" ? "px-3" : ""}`}
+                    asChild
+                  >
                     <a
                       href={project.url_github}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <Github className="h-4 w-4 mr-2" />
-                      Código no GitHub
+                      <span className="mr-2">{getButtonIcon(project.categoria)}</span>
+                      {getSidebarButtonText(project.categoria)}
                     </a>
                   </Button>
                 </div>

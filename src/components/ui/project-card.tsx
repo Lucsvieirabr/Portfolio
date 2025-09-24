@@ -1,11 +1,27 @@
 import { Link } from "react-router-dom";
-import { ExternalLink, Github } from "lucide-react";
+import { ExternalLink, Github, Computer } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { TechTag } from "@/components/ui/tech-tag";
 import { ImageWithLoading } from "@/components/ui/image-with-loading";
 import type { ProjectData } from "@/data/projects";
+
+// Função para determinar o texto do botão baseado na categoria
+const getButtonText = (categoria: string): string => {
+  if (categoria === "Profissional - CodeTime") {
+    return "Site da CodeTime";
+  }
+  return "Code";
+};
+
+// Função para determinar o ícone baseado na categoria
+const getButtonIcon = (categoria: string) => {
+  if (categoria === "Profissional - CodeTime") {
+    return <Computer className="h-3 w-3" />;
+  }
+  return <Github className="h-3 w-3" />;
+};
 
 interface ProjectCardProps {
   project: ProjectData;
@@ -136,7 +152,9 @@ export function ProjectCard({ project, index = 0 }: ProjectCardProps) {
             <Button
               size="sm"
               variant="outline"
-              className="h-8 px-3 text-xs hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300 hover:scale-105"
+              className={`h-8 text-xs hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300 hover:scale-105 ${
+                project.categoria === "Profissional - CodeTime" ? "px-2" : "px-3"
+              }`}
               asChild
               onClick={(e) => e.stopPropagation()}
             >
@@ -146,8 +164,8 @@ export function ProjectCard({ project, index = 0 }: ProjectCardProps) {
                 rel="noopener noreferrer"
                 className="flex items-center gap-1"
               >
-                <Github className="h-3 w-3" />
-                Code
+                {getButtonIcon(project.categoria)}
+                {getButtonText(project.categoria)}
               </a>
             </Button>
           </div>
