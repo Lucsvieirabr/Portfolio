@@ -13,7 +13,7 @@ export const profileData: ProfileData = {
   nome_completo: "Lucas Vieira da Silva",
   foto_perfil_url: "https://github.com/Lucsvieirabr.png",
   bio: "Desenvolvedor de software apaixonado por criar soluções inovadoras e eficientes, com foco em tecnologias web modernas. Especializado em Laravel, React, Next.js e Vue.js, busco sempre aprimorar minhas habilidades e entregar produtos de alta qualidade que fazem a diferença na vida das pessoas.",
-  cargo: "Desenvolvedor Fullstack",
+  cargo: "Desenvolvedor Full Stack",
   email: "lucsvieirabr@gmail.com",
   linkedin_url: "https://www.linkedin.com/in/lucas-vieira-da-silva-02570b264",
   github_url: "https://github.com/Lucsvieirabr",
