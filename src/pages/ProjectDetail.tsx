@@ -1,6 +1,7 @@
 import { useParams, Link, Navigate } from "react-router-dom";
-import { motion } from "framer-motion";
-import { ArrowLeft, ExternalLink, Github, Computer, Calendar, Tag } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
+import { ArrowLeft, ExternalLink, Github, Computer, Calendar, Tag, ChevronLeft, ChevronRight } from "lucide-react";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
@@ -34,6 +35,7 @@ const getButtonIcon = (categoria: string) => {
 
 const ProjectDetail = () => {
   const { slug } = useParams<{ slug: string }>();
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   
   if (!slug) {
     return <Navigate to="/projetos" replace />;
@@ -44,6 +46,18 @@ const ProjectDetail = () => {
   if (!project) {
     return <Navigate to="/projetos" replace />;
   }
+
+  const nextImage = () => {
+    setCurrentImageIndex((prev) => (prev + 1) % project.imagens_projeto.length);
+  };
+
+  const prevImage = () => {
+    setCurrentImageIndex((prev) => (prev - 1 + project.imagens_projeto.length) % project.imagens_projeto.length);
+  };
+
+  const goToImage = (index: number) => {
+    setCurrentImageIndex(index);
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -117,7 +131,7 @@ const ProjectDetail = () => {
         </div>
       </section>
 
-      {/* Project Images */}
+      {/* Project Images Carousel */}
       <section className="pb-16 lg:pb-20">
         <div className="container mx-auto px-4 lg:px-8">
           <motion.div
@@ -126,22 +140,67 @@ const ProjectDetail = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="max-w-6xl mx-auto"
           >
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {project.imagens_projeto.map((image, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
-                  className="group overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-normal"
-                >
-                  <img
-                    src={image}
-                    alt={`${project.titulo} - Imagem ${index + 1}`}
-                    className="w-full h-64 lg:h-80 object-cover group-hover:scale-105 transition-transform duration-slow"
+            <div className="relative group">
+              {/* Carousel Container */}
+              <div className="relative overflow-hidden rounded-xl shadow-lg">
+                <AnimatePresence mode="wait">
+                  <motion.img
+                    key={currentImageIndex}
+                    src={project.imagens_projeto[currentImageIndex]}
+                    alt={`${project.titulo} - Imagem ${currentImageIndex + 1}`}
+                    initial={{ opacity: 0, x: 100 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -100 }}
+                    transition={{ duration: 0.5 }}
+                    className="w-full h-96 lg:h-[600px] object-contain bg-muted"
                   />
-                </motion.div>
-              ))}
+                </AnimatePresence>
+
+                {/* Navigation Buttons */}
+                {project.imagens_projeto.length > 1 && (
+                  <>
+                    <button
+                      onClick={prevImage}
+                      className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-all opacity-0 group-hover:opacity-100"
+                      aria-label="Imagem anterior"
+                    >
+                      <ChevronLeft className="h-6 w-6" />
+                    </button>
+                    <button
+                      onClick={nextImage}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-all opacity-0 group-hover:opacity-100"
+                      aria-label="Próxima imagem"
+                    >
+                      <ChevronRight className="h-6 w-6" />
+                    </button>
+                  </>
+                )}
+              </div>
+
+              {/* Dots Indicator */}
+              {project.imagens_projeto.length > 1 && (
+                <div className="flex justify-center gap-2 mt-6">
+                  {project.imagens_projeto.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => goToImage(index)}
+                      className={`w-2 h-2 rounded-full transition-all ${
+                        index === currentImageIndex
+                          ? 'bg-primary w-8'
+                          : 'bg-muted-foreground/50 hover:bg-muted-foreground'
+                      }`}
+                      aria-label={`Ir para imagem ${index + 1}`}
+                    />
+                  ))}
+                </div>
+              )}
+
+              {/* Image Counter */}
+              {project.imagens_projeto.length > 1 && (
+                <div className="text-center mt-4 text-sm text-muted-foreground">
+                  {currentImageIndex + 1} / {project.imagens_projeto.length}
+                </div>
+              )}
             </div>
           </motion.div>
         </div>
